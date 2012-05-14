@@ -1,0 +1,10 @@
+syntax: glob
+
+fmodapi*
+stage
+
+glob:*.cpp.orig
+glob:*.cpp.bak
+glob:*.h.bak
+glob:*.h.orig
+glob:*.diff
