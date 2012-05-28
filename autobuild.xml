@@ -83,6 +83,28 @@
           <key>name</key>
           <string>linux</string>
         </map>
+        <key>linux64</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>default</key>
+            <map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/debug/*so</string>
+            <string>lib/release/*.so</string>
+          </array>
+          <key>name</key>
+          <string>linux64</string>
+        </map>
         <key>windows</key>
         <map>
           <key>build_directory</key>
@@ -109,7 +131,7 @@
       <key>source_directory</key>
       <string>fmodapi44006</string>
       <key>version</key>
-      <string>4.40.06</string>
+      <string>4.40.07</string>
     </map>
     <key>type</key>
     <string>autobuild</string>

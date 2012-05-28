@@ -1,6 +1,6 @@
 #!/bin/sh
 
-cd "$(dirname "$0")" 
+cd "$(dirname "$0")"
 
 # turn on verbose debugging output for parabuild logs.
 set -x
@@ -8,7 +8,7 @@ set -x
 set -e
 
 # Check autobuild is around or fail
-if [ -z "$AUTOBUILD" ] ; then 
+if [ -z "$AUTOBUILD" ] ; then
     fail
 fi
 if [ "$OSTYPE" = "cygwin" ] ; then
@@ -23,8 +23,8 @@ set -x
 # Form the official fmod archive URL to fetch
 # Note: fmod is provided in 3 flavors (one per platform) of precompiled binaries. We do not have access to source code.
 FMOD_ROOT_NAME="fmodapi"
-FMOD_VERSION="44006"
-FMOD_VERSION_PRETTY="4.40.06"
+FMOD_VERSION="44007"
+FMOD_VERSION_PRETTY="4.40.07"
 case "$AUTOBUILD_PLATFORM" in
     "windows")
     FMOD_PLATFORM="win"
@@ -39,12 +39,12 @@ case "$AUTOBUILD_PLATFORM" in
     "linux")
     FMOD_PLATFORM="linux"
     FMOD_FILEEXTENSION=".tar.gz"
-    FMOD_MD5="2c1f575ba34c31743d68a9b0d5475f05"
+    FMOD_MD5="27d92d706962aba225275136dc62cff7"
     ;;
     "linux64")
     FMOD_PLATFORM="linux64"
     FMOD_FILEEXTENSION=".tar.gz"
-    FMOD_MD5="624df664ff4af68dd2a68fb89a869ffa"
+    FMOD_MD5="8436f04871b72429cb72c3c7e61ced53"
     ;;
 esac
 FMOD_SOURCE_DIR="$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM"
@@ -103,11 +103,18 @@ pushd "$FMOD_ROOT_NAME$FMOD_VERSION"
             cp "api/lib/libfmod.a" "$stage/lib/release/libfmod.a"
         ;;
         "linux")
-            # Copy relevant stuff around
+            # Copy the relevant stuff around
             cp -a "api/lib/libfmodexL-$FMOD_VERSION_PRETTY.so" "$stage_debug"
             cp -a "api/lib/libfmodex-$FMOD_VERSION_PRETTY.so" "$stage_release"
             cp -a "api/lib/libfmodexL.so" "$stage_debug"
             cp -a "api/lib/libfmodex.so" "$stage_release"
+        ;;    
+        "linux64")
+            # Copy the relevant stuff around
+            cp -a "api/lib/libfmodexL64-$FMOD_VERSION_PRETTY.so" "$stage_debug"
+            cp -a "api/lib/libfmodex64-$FMOD_VERSION_PRETTY.so" "$stage_release"
+            cp -a "api/lib/libfmodexL64.so" "$stage_debug"
+            cp -a "api/lib/libfmodex64.so" "$stage_release"
         ;;
     esac
 
