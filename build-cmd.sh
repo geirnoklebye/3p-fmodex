@@ -57,7 +57,7 @@ case "$FMOD_ARCHIVE" in
     *.tar.gz)
         extract "$FMOD_ARCHIVE"
     ;;
-	*.dmg)
+    *.dmg)
         hdid fmodapi44412mac-installer.dmg
         mkdir -p "$(pwd)/$FMOD_SOURCE_DIR"
         cp -r /Volumes/FMOD\ Programmers\ API\ Mac/FMOD\ Programmers\ API/* "$FMOD_SOURCE_DIR"
