@@ -58,7 +58,7 @@ case "$FMOD_ARCHIVE" in
         extract "$FMOD_ARCHIVE"
     ;;
     *.dmg)
-        hdid fmodapi44412mac-installer.dmg
+        hdid "$FMOD_ARCHIVE"
         mkdir -p "$(pwd)/$FMOD_SOURCE_DIR"
         cp -r /Volumes/FMOD\ Programmers\ API\ Mac/FMOD\ Programmers\ API/* "$FMOD_SOURCE_DIR"
         umount /Volumes/FMOD\ Programmers\ API\ Mac/
