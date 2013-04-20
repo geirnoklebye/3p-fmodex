@@ -1,8 +1,10 @@
 syntax: glob
 
-fmodapi*
 stage
 
+glob:*.tar.gz
+glob:*.dmg
+glob:*.exe
 glob:*.cpp.orig
 glob:*.cpp.bak
 glob:*.h.bak

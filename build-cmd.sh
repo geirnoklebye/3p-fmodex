@@ -57,6 +57,11 @@ case "$FMOD_ARCHIVE" in
     *.tar.gz)
         extract "$FMOD_ARCHIVE"
     ;;
+	*.dmg)
+	    hdid fmodapi44412mac-installer.dmg
+		mkdir -p "$(pwd)/$FMOD_SOURCE_DIR"
+		cp -r /Volumes/FMOD\ Programmers\ API\ Mac/FMOD\ Programmers\ API/* "$FMOD_SOURCE_DIR"
+	;;
 esac
 
 stage="$(pwd)/stage"
@@ -73,10 +78,7 @@ mkdir -p "$stage/include/fmodex"
 mkdir -p "$stage_debug"
 mkdir -p "$stage_release"
 
-# Rename to avoid the platform name in the root dir, easier to match autobuild.xml
-mv "$FMOD_SOURCE_DIR" "$FMOD_ROOT_NAME$FMOD_VERSION"
-
-pushd "$FMOD_ROOT_NAME$FMOD_VERSION"
+pushd "$FMOD_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
             # Copy relevant stuff around: renaming the import lib to make it easier on cmake
@@ -86,7 +88,14 @@ pushd "$FMOD_ROOT_NAME$FMOD_VERSION"
             cp "api/fmodex.dll" "$stage_release"
         ;;
         "darwin")
-            # TODO: OSX
+            cp "api/lib/libfmodexL.dylib" "$stage_debug"
+            cp "api/lib/libfmodex.dylib" "$stage_release"
+			pushd "$stage_debug"
+              fix_dylib_id libfmodexL.dylib
+			popd
+			pushd "$stage_release"
+              fix_dylib_id libfmodex.dylib
+			popd
         ;;
         "linux")
             # Copy the relevant stuff around
