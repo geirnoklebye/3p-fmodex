@@ -56,7 +56,8 @@
           </map>
           <key>manifest</key>
           <array>
-            <string>lib/release/libfmod.a</string>
+	    <string>lib/debug/libfmodexL.dylib</string>
+	    <string>lib/release/libfmodex.dylib</string>
           </array>
           <key>name</key>
           <string>darwin</string>
