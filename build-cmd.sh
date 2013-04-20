@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 
 cd "$(dirname "$0")"
 
@@ -53,15 +53,16 @@ fetch_archive "$FMOD_URL" "$FMOD_ARCHIVE" "$FMOD_MD5"
 case "$FMOD_ARCHIVE" in
     *.exe)
         7z x "$FMOD_ARCHIVE" -o"$FMOD_SOURCE_DIR"
-	;;
+    ;;
     *.tar.gz)
         extract "$FMOD_ARCHIVE"
     ;;
 	*.dmg)
-	    hdid fmodapi44412mac-installer.dmg
-		mkdir -p "$(pwd)/$FMOD_SOURCE_DIR"
-		cp -r /Volumes/FMOD\ Programmers\ API\ Mac/FMOD\ Programmers\ API/* "$FMOD_SOURCE_DIR"
-	;;
+        hdid fmodapi44412mac-installer.dmg
+        mkdir -p "$(pwd)/$FMOD_SOURCE_DIR"
+        cp -r /Volumes/FMOD\ Programmers\ API\ Mac/FMOD\ Programmers\ API/* "$FMOD_SOURCE_DIR"
+        umount /Volumes/FMOD\ Programmers\ API\ Mac/
+    ;;
 esac
 
 stage="$(pwd)/stage"
@@ -90,12 +91,12 @@ pushd "$FMOD_SOURCE_DIR"
         "darwin")
             cp "api/lib/libfmodexL.dylib" "$stage_debug"
             cp "api/lib/libfmodex.dylib" "$stage_release"
-			pushd "$stage_debug"
+            pushd "$stage_debug"
               fix_dylib_id libfmodexL.dylib
-			popd
-			pushd "$stage_release"
+            popd
+            pushd "$stage_release"
               fix_dylib_id libfmodex.dylib
-			popd
+            popd
         ;;
         "linux")
             # Copy the relevant stuff around
