@@ -11,6 +11,7 @@ set -e
 if [ -z "$AUTOBUILD" ] ; then
     fail
 fi
+
 if [ "$OSTYPE" = "cygwin" ] ; then
     export AUTOBUILD="$(cygpath -u $AUTOBUILD)"
 fi
@@ -23,28 +24,22 @@ set -x
 # Form the official fmod archive URL to fetch
 # Note: fmod is provided in 3 flavors (one per platform) of precompiled binaries. We do not have access to source code.
 FMOD_ROOT_NAME="fmodapi"
-FMOD_VERSION="44201"
-FMOD_VERSION_PRETTY="4.42.01"
+FMOD_VERSION="44412"
 case "$AUTOBUILD_PLATFORM" in
     "windows")
     FMOD_PLATFORM="win-installer"
     FMOD_FILEEXTENSION=".exe"
-    FMOD_MD5="8e30e4159c68b96ab630454af4c5e606"
+    FMOD_MD5="f042f2cf6fe56a541c7d8253dec0a962"
     ;;
     "darwin")
     FMOD_PLATFORM="mac-installer"
     FMOD_FILEEXTENSION=".dmg"
-    FMOD_MD5="69011586de5725de08c10611b1a0289a"
+    FMOD_MD5="f1794ab8ed7d5bbd35ecc82d9fa2c793"
     ;;
     "linux")
     FMOD_PLATFORM="linux"
     FMOD_FILEEXTENSION=".tar.gz"
-    FMOD_MD5="561e03bf245660d71f7963689d833bfa"
-    ;;
-    "linux64")
-    FMOD_PLATFORM="linux64"
-    FMOD_FILEEXTENSION=".tar.gz"
-    FMOD_MD5="63faae1c6c60c6146b9a54426079c314"
+    FMOD_MD5="8369502088302f5b3dc62e64ff13f21b"
     ;;
 esac
 FMOD_SOURCE_DIR="$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM"
@@ -59,10 +54,6 @@ case "$FMOD_ARCHIVE" in
     *.exe)
         7z x "$FMOD_ARCHIVE" -o"$FMOD_SOURCE_DIR"
 	;;
-    *.zip)
-        # unzip locally, redirect the output to a local log file
-        unzip -n "$FMOD_ARCHIVE" >> "$FMOD_ARCHIVE".unzip-log 2>&1
-    ;;
     *.tar.gz)
         extract "$FMOD_ARCHIVE"
     ;;
@@ -95,30 +86,15 @@ pushd "$FMOD_ROOT_NAME$FMOD_VERSION"
             cp "api/fmodex.dll" "$stage_release"
         ;;
         "darwin")
-            # Create a universal version of the lib for the Mac
-            # Note : we do *not* support PPC anymore since Viewer 2 but we leave that here
-            # in case we might still need to create universal binaries with fmod in some other project
-            lipo -create "api/lib/libfmod.a" "api/lib/libfmodx86.a" -output "api/lib/libfmod.a"
-            touch -r "api/lib/libfmodx86.a" "api/lib/libfmod.a"
-            # Create a staging folder
-            mkdir -p "$stage/lib/release"
-            # Copy relevant stuff around
-            cp "api/lib/libfmod.a" "$stage/lib/release/libfmod.a"
+            # TODO: OSX
         ;;
         "linux")
             # Copy the relevant stuff around
-            cp -a "api/lib/libfmodexL-$FMOD_VERSION_PRETTY.so" "$stage_debug"
-            cp -a "api/lib/libfmodex-$FMOD_VERSION_PRETTY.so" "$stage_release"
+            cp -a "api/lib/libfmodexL-*.so" "$stage_debug"
+            cp -a "api/lib/libfmodex-*.so" "$stage_release"
             cp -a "api/lib/libfmodexL.so" "$stage_debug"
             cp -a "api/lib/libfmodex.so" "$stage_release"
         ;;    
-        "linux64")
-            # Copy the relevant stuff around
-            cp -a "api/lib/libfmodexL64-$FMOD_VERSION_PRETTY.so" "$stage_debug"
-            cp -a "api/lib/libfmodex64-$FMOD_VERSION_PRETTY.so" "$stage_release"
-            cp -a "api/lib/libfmodexL64.so" "$stage_debug"
-            cp -a "api/lib/libfmodex64.so" "$stage_release"
-        ;;
     esac
 
     # Copy the headers

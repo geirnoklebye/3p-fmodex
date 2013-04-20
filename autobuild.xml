@@ -129,9 +129,9 @@
         </map>
       </map>
       <key>source_directory</key>
-      <string>fmodapi44201</string>
+      <string>fmodapi44412</string>
       <key>version</key>
-      <string>4.42.01</string>
+      <string>4.44.12</string>
     </map>
     <key>type</key>
     <string>autobuild</string>
