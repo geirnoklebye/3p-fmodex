@@ -100,10 +100,10 @@ pushd "$FMOD_SOURCE_DIR"
         ;;
         "linux")
             # Copy the relevant stuff around
-            cp -a "api/lib/libfmodexL-*.so" "$stage_debug"
-            cp -a "api/lib/libfmodex-*.so" "$stage_release"
-            cp -a "api/lib/libfmodexL.so" "$stage_debug"
-            cp -a "api/lib/libfmodex.so" "$stage_release"
+            cp -a api/lib/libfmodexL-*.so "$stage_debug"
+            cp -a api/lib/libfmodex-*.so "$stage_release"
+            cp -a api/lib/libfmodexL.so "$stage_debug"
+            cp -a api/lib/libfmodex.so "$stage_release"
         ;;    
     esac
 
