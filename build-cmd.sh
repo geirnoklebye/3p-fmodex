@@ -55,7 +55,11 @@ fetch_archive "$FMOD_URL" "$FMOD_ARCHIVE" "$FMOD_MD5"
 # TODO: move that logic to the appropriate autobuild script
 case "$FMOD_ARCHIVE" in
     *.exe)
-        7z x "$FMOD_ARCHIVE"  -aoa "$FMOD_SOURCE_DIR"
+        chmod +x "$FMOD_ARCHIVE"
+        mkdir -p "$FMOD_SOURCE_DIR"
+        pushd "$FMOD_SOURCE_DIR"
+        7z x ../"$FMOD_ARCHIVE" -aoa
+        popd
     ;;
     *.tar.gz)
         extract -ox "$FMOD_ARCHIVE"
