@@ -27,16 +27,19 @@ FMOD_ROOT_NAME="fmodapi"
 FMOD_VERSION="44431"
 case "$AUTOBUILD_PLATFORM" in
     "windows")
+    FMOD_OS="win"
     FMOD_PLATFORM="win-installer"
     FMOD_FILEEXTENSION=".exe"
     FMOD_MD5="c2ab3ac41ac4327726bb97945c3e5bbc"
     ;;
     "darwin")
+    FMOD_OS="mac"
     FMOD_PLATFORM="mac-installer"
     FMOD_FILEEXTENSION=".dmg"
     FMOD_MD5="9798b65fe82e88cfdd1c2ca1c29696d2"
     ;;
     "linux")
+    FMOD_OS="linux"
     FMOD_PLATFORM="linux"
     FMOD_FILEEXTENSION=".tar.gz"
     FMOD_MD5="222ab675a059694c58b5299e818e820f"
@@ -44,7 +47,7 @@ case "$AUTOBUILD_PLATFORM" in
 esac
 FMOD_SOURCE_DIR="$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM"
 FMOD_ARCHIVE="$FMOD_SOURCE_DIR$FMOD_FILEEXTENSION"
-FMOD_URL="http://www.fmod.org/download/fmodex/api/$FMOD_PLATFORM/$FMOD_ARCHIVE"
+FMOD_URL="http://www.fmod.org/download/fmodex/api/$FMOD_OS/$FMOD_ARCHIVE"
 
 # Fetch and extract the official fmod files
 fetch_archive "$FMOD_URL" "$FMOD_ARCHIVE" "$FMOD_MD5"
