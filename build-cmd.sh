@@ -66,7 +66,7 @@ case "$FMOD_ARCHIVE" in
         popd
     ;;
     *.tar.gz)
-        extract -ox "$FMOD_ARCHIVE"
+        extract "$FMOD_ARCHIVE"
     ;;
     *.dmg)
         hdid "$FMOD_ARCHIVE"
