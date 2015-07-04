@@ -27,26 +27,26 @@ set -x
 # 5900f269e10d38d54c989b79ccd686e7 *fmodapi44450mac-installer.dmg
 # 202a1dcdeb94cbd8645268c86cb2a149 *fmodapi44450win-installer.exe
 FMOD_ROOT_NAME="fmodapi"
-FMOD_VERSION="44450"
+FMOD_VERSION="44454"
 
 case "$AUTOBUILD_PLATFORM" in
     "windows")
     FMOD_OS="win"
     FMOD_PLATFORM="win-installer"
     FMOD_FILEEXTENSION=".exe"
-    FMOD_MD5="202a1dcdeb94cbd8645268c86cb2a149"
+    FMOD_MD5="b34f05c1d88db6b83d6787aa71cb5946"
     ;;
     "darwin")
     FMOD_OS="mac"
     FMOD_PLATFORM="mac-installer"
     FMOD_FILEEXTENSION=".dmg"
-    FMOD_MD5="5900f269e10d38d54c989b79ccd686e7"
+    FMOD_MD5="f30fe1b27e734fbf7a649a81ec21b87d"
     ;;
     "linux")
     FMOD_OS="linux"
     FMOD_PLATFORM="linux"
     FMOD_FILEEXTENSION=".tar.gz"
-    FMOD_MD5="4024a88133b00968013874b0eeaec9d0"
+    FMOD_MD5="b795ecde375a45efc9e84b98a8009266"
     ;;
 esac
 FMOD_SOURCE_DIR="$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM"
