@@ -48,13 +48,21 @@ case "$AUTOBUILD_PLATFORM" in
     FMOD_FILEEXTENSION=".tar.gz"
     FMOD_MD5="9f770e797c39192ff6cdb88dc05dd028"
     ;;
+    "linux64")
+    FMOD_OS="linux"
+    FMOD_PLATFORM="linux"
+    FMOD_FILEEXTENSION=".tar.gz"
+    FMOD_MD5="9f770e797c39192ff6cdb88dc05dd028"
+    ;;
 esac
-FMOD_SOURCE_DIR="$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM"
+FMOD_SOURCE_DIR="/home/nicky/3p-fmodex/"$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM$FMOD_EXTENSION
 FMOD_ARCHIVE="$FMOD_SOURCE_DIR$FMOD_FILEEXTENSION"
-FMOD_URL="http://www.fmod.org/download/fmodex/api/$FMOD_OS/$FMOD_ARCHIVE"
-
+FMOD_URL="$FMOD_SOURCE_DIR$FMOD_ARCHIVE"
+FMOD_VERSION_PRETTY="4.44.61"
 # Fetch and extract the official fmod files
-fetch_archive "$FMOD_URL" "$FMOD_ARCHIVE" "$FMOD_MD5"
+#fetch_archive "$FMOD_URL" "$FMOD_ARCHIVE" "$FMOD_MD5"
+#wget "$FMOD_URL" 
+
 # Workaround as extract does not handle .zip files (yet)
 # TODO: move that logic to the appropriate autobuild script
 case "$FMOD_ARCHIVE" in
@@ -89,7 +97,7 @@ mkdir -p "$stage/include/fmodex"
 #Create the staging debug and release folders
 mkdir -p "$stage_debug"
 mkdir -p "$stage_release"
-
+echo "${FMOD_VERSION_PRETTY}" > "${stage}/VERSION.txt"
 pushd "$FMOD_SOURCE_DIR"
     case "$AUTOBUILD_PLATFORM" in
         "windows")
@@ -115,7 +123,14 @@ pushd "$FMOD_SOURCE_DIR"
             cp -a api/lib/libfmodex-*.so "$stage_release"
             cp -a api/lib/libfmodexL.so "$stage_debug"
             cp -a api/lib/libfmodex.so "$stage_release"
-        ;;    
+        ;; 
+        "linux64")
+            # Copy the relevant stuff around
+            cp -a api/lib/libfmodexL64-*.so "$stage_debug"
+            cp -a api/lib/libfmodex64-*.so "$stage_release"
+            cp -a api/lib/libfmodexL64.so "$stage_debug"
+            cp -a api/lib/libfmodex64.so "$stage_release"
+        ;;       
     esac
 
     # Copy the headers

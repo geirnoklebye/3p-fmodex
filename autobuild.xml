@@ -4,11 +4,11 @@
     <key>package_description</key>
     <map>
       <key>copyright</key>
-      <string>Copyright c 2005-2015 Firelight Technologies Pty, Ltd.</string>
+      <string>FMOD Sound System, copyright © Firelight Technologies Pty, Ltd., 1994-2014.</string>
       <key>description</key>
-      <string>FMOD Ex Programmer's API</string>
+      <string>FMOD Ex audio system library</string>
       <key>license</key>
-      <string>FMOD NON-COMMERCIAL LICENSE</string>
+      <string>fmodex</string>
       <key>license_file</key>
       <string>LICENSES/fmodex.txt</string>
       <key>name</key>
@@ -132,11 +132,31 @@
           <key>name</key>
           <string>windows</string>
         </map>
+        <key>windows64</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>default</key>
+            <map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/debug/*</string>
+            <string>lib/release/*</string>
+          </array>
+          <key>name</key>
+          <string>windows64</string>
+        </map>
       </map>
-      <key>source_directory</key>
-      <string>fmodapi44461</string>
       <key>version_file</key>
-      <string>../VERSION.txt</string>
+      <string>VERSION.txt</string>
     </map>
     <key>type</key>
     <string>autobuild</string>
