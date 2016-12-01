@@ -36,6 +36,12 @@ case "$AUTOBUILD_PLATFORM" in
     FMOD_FILEEXTENSION=".exe"
     FMOD_MD5="b3a26243060bb9e8e1ac5e4c7e2a6427"
     ;;
+    "windows64")
+    FMOD_OS="win"
+    FMOD_PLATFORM="win-installer"
+    FMOD_FILEEXTENSION=".exe"
+    FMOD_MD5="b3a26243060bb9e8e1ac5e4c7e2a6427"
+    ;;    
     "darwin")
     FMOD_OS="mac"
     FMOD_PLATFORM="mac-installer"
@@ -55,7 +61,7 @@ case "$AUTOBUILD_PLATFORM" in
     FMOD_MD5="9f770e797c39192ff6cdb88dc05dd028"
     ;;
 esac
-FMOD_SOURCE_DIR="/home/nicky/3p-fmodex/"$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM$FMOD_EXTENSION
+FMOD_SOURCE_DIR="/cygdrive/c/Users/Bill/P64/P64_3p-fmodex/"$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM$FMOD_EXTENSION
 FMOD_ARCHIVE="$FMOD_SOURCE_DIR$FMOD_FILEEXTENSION"
 FMOD_URL="$FMOD_SOURCE_DIR$FMOD_ARCHIVE"
 FMOD_VERSION_PRETTY="4.44.61"
@@ -70,7 +76,7 @@ case "$FMOD_ARCHIVE" in
         chmod +x "$FMOD_ARCHIVE"
         mkdir -p "$FMOD_SOURCE_DIR"
         pushd "$FMOD_SOURCE_DIR"
-        7z x ../"$FMOD_ARCHIVE" -aoa
+        7z x "$FMOD_ARCHIVE" -aoa
         popd
     ;;
     *.tar.gz)
@@ -107,6 +113,12 @@ pushd "$FMOD_SOURCE_DIR"
             cp "api/fmodexL.dll" "$stage_debug"
             cp "api/fmodex.dll" "$stage_release"
         ;;
+        "windows64")
+            cp -dR --preserve=mode,timestamps "api/lib/fmodexL64_vc.lib" "$stage_debug"
+            cp -dR --preserve=mode,timestamps "api/lib/fmodex64_vc.lib" "$stage_release"
+            cp -dR --preserve=mode,timestamps "api/fmodexL64.dll" "$stage_debug"
+            cp -dR --preserve=mode,timestamps "api/fmodex64.dll" "$stage_release"
+        ;;        
         "darwin")
             cp "api/lib/libfmodexL.dylib" "$stage_debug"
             cp "api/lib/libfmodex.dylib" "$stage_release"
@@ -139,5 +151,5 @@ pushd "$FMOD_SOURCE_DIR"
     # Copy License (extracted from the readme)
     cp "documentation/LICENSE.TXT" "$stage/LICENSES/fmodex.txt"
 popd
-pass
+wait
 
