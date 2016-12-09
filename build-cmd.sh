@@ -23,48 +23,54 @@ set -x
 
 # Form the official fmod archive URL to fetch
 # Note: fmod is provided in 3 flavors (one per platform) of precompiled binaries. We do not have access to source code.
-# 9f770e797c39192ff6cdb88dc05dd028 *fmodapi44461linux.tar.gz
-# 1620292499e01d7559591b5162cdd03d *fmodapi44461mac-installer.dmg
-# b3a26243060bb9e8e1ac5e4c7e2a6427 *fmodapi44461win-installer.exe
+# a418b29f95884dbd6a576117a759319c *fmodapi44464win-installer.exe
+# b6b1cb5f87a375e7a647916c10330c1c *fmodapi44464mac-installer.dmg
+# 092faf696a90fb9bfa3c4333d6ec8e62 *fmodapi44464linux.tar.gz
 FMOD_ROOT_NAME="fmodapi"
-FMOD_VERSION="44461"
+FMOD_VERSION="44464"
 
 case "$AUTOBUILD_PLATFORM" in
     "windows")
     FMOD_OS="win"
     FMOD_PLATFORM="win-installer"
     FMOD_FILEEXTENSION=".exe"
-    FMOD_MD5="b3a26243060bb9e8e1ac5e4c7e2a6427"
+    FMOD_MD5="a418b29f95884dbd6a576117a759319c"
     ;;
     "windows64")
     FMOD_OS="win"
     FMOD_PLATFORM="win-installer"
     FMOD_FILEEXTENSION=".exe"
-    FMOD_MD5="b3a26243060bb9e8e1ac5e4c7e2a6427"
+    FMOD_MD5="a418b29f95884dbd6a576117a759319c"
     ;;    
     "darwin")
     FMOD_OS="mac"
     FMOD_PLATFORM="mac-installer"
     FMOD_FILEEXTENSION=".dmg"
-    FMOD_MD5="1620292499e01d7559591b5162cdd03d"
+    FMOD_MD5="b6b1cb5f87a375e7a647916c10330c1c"
+    ;;
+    "darwin64")
+    FMOD_OS="mac"
+    FMOD_PLATFORM="mac-installer"
+    FMOD_FILEEXTENSION=".dmg"
+    FMOD_MD5="b6b1cb5f87a375e7a647916c10330c1c"
     ;;
     "linux")
     FMOD_OS="linux"
     FMOD_PLATFORM="linux"
     FMOD_FILEEXTENSION=".tar.gz"
-    FMOD_MD5="9f770e797c39192ff6cdb88dc05dd028"
+    FMOD_MD5="092faf696a90fb9bfa3c4333d6ec8e62"
     ;;
     "linux64")
     FMOD_OS="linux"
     FMOD_PLATFORM="linux"
     FMOD_FILEEXTENSION=".tar.gz"
-    FMOD_MD5="9f770e797c39192ff6cdb88dc05dd028"
+    FMOD_MD5="092faf696a90fb9bfa3c4333d6ec8e62"
     ;;
 esac
 FMOD_SOURCE_DIR="/cygdrive/c/Users/Bill/P64/P64_3p-fmodex/"$FMOD_ROOT_NAME$FMOD_VERSION$FMOD_PLATFORM$FMOD_EXTENSION
 FMOD_ARCHIVE="$FMOD_SOURCE_DIR$FMOD_FILEEXTENSION"
 FMOD_URL="$FMOD_SOURCE_DIR$FMOD_ARCHIVE"
-FMOD_VERSION_PRETTY="4.44.61"
+FMOD_VERSION_PRETTY="4.44.64"
 # Fetch and extract the official fmod files
 #fetch_archive "$FMOD_URL" "$FMOD_ARCHIVE" "$FMOD_MD5"
 #wget "$FMOD_URL" 
@@ -129,6 +135,16 @@ pushd "$FMOD_SOURCE_DIR"
               fix_dylib_id libfmodex.dylib
             popd
         ;;
+         "darwin64")
+            cp "api/lib/libfmodexL64.dylib" "$stage_debug"
+            cp "api/lib/libfmodex.dylib64" "$stage_release"
+            pushd "$stage_debug"
+              fix_dylib_id libfmodexL64.dylib
+            popd
+            pushd "$stage_release"
+              fix_dylib_id libfmodex64.dylib
+            popd
+        ;;       
         "linux")
             # Copy the relevant stuff around
             cp -a api/lib/libfmodexL-*.so "$stage_debug"

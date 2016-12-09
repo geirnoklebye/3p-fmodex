@@ -66,6 +66,29 @@
           <key>name</key>
           <string>darwin</string>
         </map>
+         <key>darwin64</key>
+        <map>
+          <key>build_directory</key>
+          <string>stage</string>
+          <key>configurations</key>
+          <map>
+            <key>default</key>
+            <map>
+              <key>default</key>
+              <boolean>true</boolean>
+              <key>name</key>
+              <string>default</string>
+            </map>
+          </map>
+          <key>manifest</key>
+          <array>
+            <string>lib/debug/libfmodexL64.dylib</string>
+            <string>lib/release/libfmodex64.dylib</string>
+          </array>
+          <key>name</key>
+          <string>darwin64</string>
+        </map>
+       
         <key>linux</key>
         <map>
           <key>build_directory</key>
